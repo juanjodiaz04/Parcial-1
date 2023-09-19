@@ -8,9 +8,13 @@ int latchPin2 = 6;  //Pin conectado a ST_CP del segundo 74595
 int clockPin2 = 7;  //Pin connected to SH_CP del segundo 74595
 int dataPin2 = 5;   //Pin connected to DS del segundo 74595
 
+int opt; //Para controlar a qué opción entra
+
+/*
 int j=0;
 int anode_decimal[8]={1, 128,64,32,16,8,4,2};
 int cathode_decimal[8]={254, 253, 251, 247, 239, 223, 191, 127};
+*/
 
 //Funciones
 void verificacion();
@@ -31,7 +35,13 @@ void setup() {
 }
 
 void loop() {
-  verificacion();
+
+  opt = 1; //Cambiarlo a entrada por puerto serial
+
+  if (opt == 1)
+  {
+    verificacion();
+  }
   
   /*
     for(j=0;j<8;j++)
