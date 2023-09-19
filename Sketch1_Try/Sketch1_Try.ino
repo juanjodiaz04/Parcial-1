@@ -42,6 +42,6 @@ void loop() {
       // shift out the bits:  
       digitalWrite(latchPin2, HIGH);
         
-      delay(1000);                   
+      delay(100);                   
    }
 }
