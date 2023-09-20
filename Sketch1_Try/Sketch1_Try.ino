@@ -135,33 +135,17 @@ void rect_patt(unsigned long dur , unsigned long inicio){
 
 void X_patt(unsigned long dur , unsigned long inicio){
   
+  byte led_array[8] = {0B01111110, 0B10000001, 0B10111101, 0B01000010, 0B11011011, 0B00100100, 0B11100111, 0B00011000};
+  
   while(millis() - inicio <= dur){
    
-    digitalWrite(latchPin,LOW);
-    shiftOut(dataPin,clockPin,MSBFIRST,0B01111110); 
-    shiftOut(dataPin,clockPin,MSBFIRST,0B10000001); 
-  	digitalWrite(latchPin,HIGH);
-    digitalWrite(latchPin,LOW);
+    for(int i = 0; i < 8; i++){
+      digitalWrite(latchPin,LOW);
+      shiftOut(dataPin,clockPin,MSBFIRST,led_array[i]); 
+      digitalWrite(latchPin,HIGH);
+      digitalWrite(latchPin,LOW);
+    }
   
-    shiftOut(dataPin,clockPin,MSBFIRST,0B10111101); 
-    shiftOut(dataPin,clockPin,MSBFIRST,0B01000010); 
-  	digitalWrite(latchPin,HIGH);
-    digitalWrite(latchPin,LOW);
-  
-    shiftOut(dataPin,clockPin,MSBFIRST,0B11011011); 
-    shiftOut(dataPin,clockPin,MSBFIRST,0B00100100); 
-  	digitalWrite(latchPin,HIGH);
-    digitalWrite(latchPin,LOW);
-  
-    shiftOut(dataPin,clockPin,MSBFIRST,0B11100111); 
-    shiftOut(dataPin,clockPin,MSBFIRST,0B00011000); 
-  	digitalWrite(latchPin,HIGH);
-    digitalWrite(latchPin,LOW);
-  
-  	shiftOut(dataPin,clockPin,MSBFIRST,0B11111111); 
-    shiftOut(dataPin,clockPin,MSBFIRST,0B00000000);
-    digitalWrite(latchPin,HIGH);
-    digitalWrite(latchPin,LOW);
   }
 }
 
