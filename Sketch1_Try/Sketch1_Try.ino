@@ -151,22 +151,11 @@ void X_patt(unsigned long dur , unsigned long inicio){
 
 void alt_patt(unsigned long dur , unsigned long inicio){
   
+  byte led_array[8] = {0B00110011, 0B10110110, 0B11001100, 0B11011011, 0B11111111, 0B00000000};
+  
   while(millis() - inicio <= dur){
     
-    shiftOut(dataPin,clockPin,MSBFIRST,0B00110011); 
-    shiftOut(dataPin,clockPin,MSBFIRST,0B01101101); 
-  	digitalWrite(latchPin,HIGH);
-    digitalWrite(latchPin,LOW);
-  
-    shiftOut(dataPin,clockPin,MSBFIRST,0B11001100); 
-    shiftOut(dataPin,clockPin,MSBFIRST,0B11011011); 
-  	digitalWrite(latchPin,HIGH);
-    digitalWrite(latchPin,LOW);
-  
-  	shiftOut(dataPin,clockPin,MSBFIRST,0B11111111); 
-    shiftOut(dataPin,clockPin,MSBFIRST,0B00000000);
-    digitalWrite(latchPin,HIGH);
-    digitalWrite(latchPin,LOW);
+    
   }
 }
 
