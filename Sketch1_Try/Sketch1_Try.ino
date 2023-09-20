@@ -146,16 +146,17 @@ void X_patt(unsigned long dur, unsigned long inicio) {
   led_array[6] = 0B11100111;
   led_array[7] = 0B00011000;
   
-  while(millis() - inicio <= dur){
-   
-    for(int i = 0; i < 8; i++){
-      digitalWrite(latchPin,LOW);
-      shiftOut(dataPin,clockPin,MSBFIRST,led_array[i]); 
-      digitalWrite(latchPin,HIGH);
-      digitalWrite(latchPin,LOW);
-    }
+  while (millis() - inicio <= dur) {
   
+    for (int i = 0; i < 8; i++) {
+      digitalWrite(latchPin, LOW);
+      shiftOut(dataPin, clockPin, MSBFIRST, led_array[i]);
+      digitalWrite(latchPin, HIGH);
+      digitalWrite(latchPin, LOW);
+    }
   }
+
+  delete[] led_array; // Liberar la memoria dinámica cuando ya no se necesita
 }
 
 void alt_patt(unsigned long dur, unsigned long inicio) {
@@ -169,16 +170,17 @@ void alt_patt(unsigned long dur, unsigned long inicio) {
   led_array[4] = 0B11111111;
   led_array[5] = 0B00000000;
   
-  while(millis() - inicio <= dur){
+  while (millis() - inicio <= dur) {
   
-    for(int i = 0; i < 6; i++){
-      digitalWrite(latchPin,LOW);
-      shiftOut(dataPin,clockPin,MSBFIRST,led_array[i]); 
-      digitalWrite(latchPin,HIGH);
-      digitalWrite(latchPin,LOW);
+    for (int i = 0; i < 6; i++) {
+      digitalWrite(latchPin, LOW);
+      shiftOut(dataPin, clockPin, MSBFIRST, led_array[i]);
+      digitalWrite(latchPin, HIGH);
+      digitalWrite(latchPin, LOW);
     }
-    
   }
+
+  delete[] led_array; // Liberar la memoria dinámica cuando ya no se necesita
 }
 
 void arr_patt(unsigned long dur , unsigned long inicio){
