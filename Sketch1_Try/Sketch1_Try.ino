@@ -137,6 +137,15 @@ void X_patt(unsigned long dur, unsigned long inicio) {
   
   byte* led_array = new byte[8];
   
+  led_array[0] = 0B01111110;
+  led_array[1] = 0B10000001;
+  led_array[2] = 0B10111101;
+  led_array[3] = 0B01000010;
+  led_array[4] = 0B11011011;
+  led_array[5] = 0B00100100;
+  led_array[6] = 0B11100111;
+  led_array[7] = 0B00011000;
+  
   while(millis() - inicio <= dur){
    
     for(int i = 0; i < 8; i++){
@@ -152,6 +161,13 @@ void X_patt(unsigned long dur, unsigned long inicio) {
 void alt_patt(unsigned long dur, unsigned long inicio) {
 
   byte* led_array = new byte[6];
+  
+  led_array[0] = 0B00110011;
+  led_array[1] = 0B10110110;
+  led_array[2] = 0B11001100;
+  led_array[3] = 0B11011011;
+  led_array[4] = 0B11111111;
+  led_array[5] = 0B00000000;
   
   while(millis() - inicio <= dur){
   
