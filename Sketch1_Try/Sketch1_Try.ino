@@ -1,89 +1,132 @@
 // C++ code
 //
-int latchPin = 12;  //Pin conectado a ST_CP del primer 74595
-int clockPin = 13;  //Pin conectado a SH_CP del primer 74595
-int dataPin = 11;   //Pin conectado a DS del primer 74595
-
-int latchPin2 = 6;  //Pin conectado a ST_CP del segundo 74595
-int clockPin2 = 7;  //Pin connected to SH_CP del segundo 74595
-int dataPin2 = 5;   //Pin connected to DS del segundo 74595
-
-int opt; //Para controlar a qué opción entra
-
-/*
-int j=0;
-int anode_decimal[8]={1, 128,64,32,16,8,4,2};
-int cathode_decimal[8]={254, 253, 251, 247, 239, 223, 191, 127};
-*/
+int latchPin=11;
+int clockPin=12;
+int dataPin=9;
 
 //Funciones
 void verificacion();
+void X_patt();
+void rect_patt();
+void alt_patt();
+void arr_patt();
 
+  
 void setup() {
-  
-  //Iniciar el puerto serial para poder pedir entradas
-  Serial.begin(9600);
-  
-  //Los pines conectados al 74595 son de salida para controlar el integrado
-  pinMode(latchPin, OUTPUT);
-  pinMode(clockPin, OUTPUT);
-  pinMode(dataPin, OUTPUT);
-  
-  pinMode(latchPin2, OUTPUT);
-  pinMode(clockPin2, OUTPUT);
-  pinMode(dataPin2, OUTPUT);
+  // put your setup code here, to run once:
+  pinMode(latchPin,OUTPUT);
+  pinMode(clockPin,OUTPUT);
+  pinMode(dataPin,OUTPUT);
 }
-
 void loop() {
+  // put your main code here, to run repeatedly:
 
-  opt = 1; //Cambiarlo a entrada por puerto serial
+  verificacion();
+  //rect_patt();
+  //X_patt();
+  //alt_patt();
+  //arr_patt();
 
-  if (opt == 1)
-  {
-    verificacion();
-  }
-  
-  /*
-    for(j=0;j<8;j++)
-    {
-      
-      //latchPin en bajo para poder modificar la trama de bits a enviar  
-      digitalWrite(latchPin, LOW);
-      shiftOut(dataPin, clockPin, MSBFIRST, cathode_decimal[j]);
-      // shift out the bits:    
-      digitalWrite(latchPin, HIGH);
-  
-      //latchPin en bajo para poder modificar la trama de bits a enviar   
-      digitalWrite(latchPin2, LOW);
-      shiftOut(dataPin2, clockPin2, MSBFIRST, anode_decimal[j]);
-      // shift out the bits:  
-      digitalWrite(latchPin2, HIGH);
-        
-      delay(1000);                   
-   }
-   */
-  
 }
-
 
 void verificacion(){
   
   for (int i = 0; i < 5; i++){
     
-    digitalWrite(latchPin, LOW);
-    shiftOut(dataPin, clockPin, MSBFIRST, 0);
-    digitalWrite(latchPin, HIGH);
-    digitalWrite(latchPin2, LOW);
-    shiftOut(dataPin2, clockPin2, MSBFIRST, 255);
-    digitalWrite(latchPin2, HIGH);
+    shiftOut(dataPin,clockPin,MSBFIRST,0B00000000); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B11111111); 
+  	digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
     delay(3000);
     
-    digitalWrite(latchPin, LOW);
-    shiftOut(dataPin, clockPin, MSBFIRST, 255);
-    digitalWrite(latchPin, HIGH);
-    digitalWrite(latchPin2, LOW);
-    shiftOut(dataPin2, clockPin2, MSBFIRST, 0);
-    digitalWrite(latchPin2, HIGH);
+    shiftOut(dataPin,clockPin,MSBFIRST,0B11111111); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B00000000);
+    digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
     delay(3000);
   }
+}
+
+void rect_patt(){
+  
+    shiftOut(dataPin,clockPin,MSBFIRST,0B11100111); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B10000001); 
+  	digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
+  
+    shiftOut(dataPin,clockPin,MSBFIRST,0B11000011); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B01000010); 
+  	digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
+  
+    shiftOut(dataPin,clockPin,MSBFIRST,0B00000000); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B00011000); 
+  	digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
+  
+  	shiftOut(dataPin,clockPin,MSBFIRST,0B10000001); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B00100100); 
+  	digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
+
+}
+
+void X_patt(){
+  
+    digitalWrite(latchPin,LOW);
+    shiftOut(dataPin,clockPin,MSBFIRST,0B01111110); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B10000001); 
+  	digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
+  
+    shiftOut(dataPin,clockPin,MSBFIRST,0B10111101); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B01000010); 
+  	digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
+  
+    shiftOut(dataPin,clockPin,MSBFIRST,0B11011011); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B00100100); 
+  	digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
+  
+    shiftOut(dataPin,clockPin,MSBFIRST,0B11100111); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B00011000); 
+  	digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
+}
+
+void alt_patt(){
+    shiftOut(dataPin,clockPin,MSBFIRST,0B00110011); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B01101101); 
+  	digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
+  
+    shiftOut(dataPin,clockPin,MSBFIRST,0B11001100); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B11011011); 
+  	digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
+}
+
+void arr_patt(){
+  
+    digitalWrite(latchPin,LOW);
+    shiftOut(dataPin,clockPin,MSBFIRST,0B01111110); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B11110000); 
+  	digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
+  
+    shiftOut(dataPin,clockPin,MSBFIRST,0B10111101); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B01111000); 
+  	digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
+  
+    shiftOut(dataPin,clockPin,MSBFIRST,0B11011011); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B00111100); 
+  	digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
+  
+    shiftOut(dataPin,clockPin,MSBFIRST,0B11100111); 
+    shiftOut(dataPin,clockPin,MSBFIRST,0B00011110); 
+  	digitalWrite(latchPin,HIGH);
+    digitalWrite(latchPin,LOW);
 }
