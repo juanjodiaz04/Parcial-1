@@ -53,28 +53,28 @@ void loop() {
           	Serial.print("Tiempo de inicio: ");
           	Serial.println(timestart);
      		rect_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
-        }
+      }
    		else if(receivedChar == 'C'){
      		Serial.println("Patron 2");
         	timestart = millis();
           	Serial.print("Tiempo de inicio: ");
           	Serial.println(timestart);
      		X_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
-        }
+      }
    		else if(receivedChar == 'D'){
      		Serial.println("Patron 3");
         	timestart = millis();
           	Serial.print("Tiempo de inicio: ");
           	Serial.println(timestart);
      		alt_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
-        }
+      }
    		else if(receivedChar == 'E'){
      		Serial.println("Patron 4");
         	timestart = millis();
           	Serial.print("Tiempo de inicio: ");
           	Serial.println(timestart);
      		arr_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
-        }
+      }
    		else {
    		}
    
