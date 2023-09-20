@@ -154,7 +154,13 @@ void alt_patt(unsigned long dur , unsigned long inicio){
   byte led_array[8] = {0B00110011, 0B10110110, 0B11001100, 0B11011011, 0B11111111, 0B00000000};
   
   while(millis() - inicio <= dur){
-    
+  
+    for(int i = 0; i < 6; i++){
+      digitalWrite(latchPin,LOW);
+      shiftOut(dataPin,clockPin,MSBFIRST,led_array[i]); 
+      digitalWrite(latchPin,HIGH);
+      digitalWrite(latchPin,LOW);
+    }
     
   }
 }
