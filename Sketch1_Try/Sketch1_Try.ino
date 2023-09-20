@@ -149,9 +149,9 @@ void X_patt(unsigned long dur, unsigned long inicio) {
   }
 }
 
-void alt_patt(unsigned long dur , unsigned long inicio){
-  
-  byte led_array[8] = {0B00110011, 0B10110110, 0B11001100, 0B11011011, 0B11111111, 0B00000000};
+void alt_patt(unsigned long dur, unsigned long inicio) {
+
+  byte* led_array = new byte[6];
   
   while(millis() - inicio <= dur){
   
