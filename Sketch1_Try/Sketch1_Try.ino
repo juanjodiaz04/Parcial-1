@@ -103,35 +103,35 @@ void verificacion(int iter , int delays){
 }
 
 void rect_patt(unsigned long dur , unsigned long inicio){
-  	
+  
+  int **pr; int a = 6;
+  pr = (new int* [2]); //Filas
+  
+  pr[0] = new int [4]; pr[1] = new int [4]; //Reservar columnas
+  
+  pr[0][0] = 126; //Semilla para el register shifter de los cátodos
+  pr[1][0] = 24;  //Semilla para el register shifter de los ánodos
+  
+  
+  for (int j = 1; j<4 ;j++) //Llenar el array de las otras semillas
+  {
+    pr[0][j] = pr[0][j-1] + (ceil(pow(2,a)))-(ceil(pow(2,6-a))); //Forma 2**n - 2**a → n+a = 6
+    pr[1][j] = pr[1][j-1] + (ceil(pow(2,j+4))) + (ceil(pow(2,7-(j+4)))); //Forma 2**n + 2**a → n+a = 7 
+    a--;
+   }
+  
   	while(millis() - inicio <= dur){
+      for (int i = 0; i <4; i++){
+        patt_print(latchPin, dataPin ,clockPin, pr[0][i], pr[1][i]);
+      }
       
-      shiftOut(dataPin,clockPin,MSBFIRST,0B11100111); 
-      shiftOut(dataPin,clockPin,MSBFIRST,0B10000001); 
-      digitalWrite(latchPin,HIGH);
-      digitalWrite(latchPin,LOW);
-
-      shiftOut(dataPin,clockPin,MSBFIRST,0B11000011); 
-      shiftOut(dataPin,clockPin,MSBFIRST,0B01000010); 
-      digitalWrite(latchPin,HIGH);
-      digitalWrite(latchPin,LOW);
-
-      shiftOut(dataPin,clockPin,MSBFIRST,0B00000000); 
-      shiftOut(dataPin,clockPin,MSBFIRST,0B00011000); 
-      digitalWrite(latchPin,HIGH);
-      digitalWrite(latchPin,LOW);
-
-      shiftOut(dataPin,clockPin,MSBFIRST,0B10000001); 
-      shiftOut(dataPin,clockPin,MSBFIRST,0B00100100); 
-      digitalWrite(latchPin,HIGH);
-      digitalWrite(latchPin,LOW);
-
-      shiftOut(dataPin,clockPin,MSBFIRST,0B11111111); 
-      shiftOut(dataPin,clockPin,MSBFIRST,0B00000000);
-      digitalWrite(latchPin,HIGH);
-      digitalWrite(latchPin,LOW);
- 
+	    
     }
+  off();
+  
+  delete [] pr[0]; delete [] pr[1];  //Liberación de memoria
+  delete [] pr;
+  pr = NULL;
 
 }
 
