@@ -16,6 +16,8 @@ void X_patt();
 void rect_patt();
 void alt_patt();
 void arr_patt();
+void patt_print(int latchPin,int dataPin,int clockPin,int a, int b);
+void off();
 
   
 void setup() {
