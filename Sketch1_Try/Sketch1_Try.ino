@@ -48,27 +48,27 @@ void loop() {
    
    		if (receivedChar == 'A'){
      		Serial.println("Verificacion");
-        	timestart = millis();
-     		verificacion(3, 2000); //Iteraciones y tiempo de delay
+        timestart = millis();
+     		imagen(durat); //duración
    		}
    		else if(receivedChar == 'B'){
      		Serial.println("Patron 1");
-        	timestart = millis();
+        timestart = millis();
      		rect_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
         }
    		else if(receivedChar == 'C'){
      		Serial.println("Patron 2");
-        	timestart = millis();
+        timestart = millis();
      		X_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
         }
    		else if(receivedChar == 'D'){
      		Serial.println("Patron 3");
-        	timestart = millis();
+        timestart = millis();
      		alt_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
         }
    		else if(receivedChar == 'E'){
      		Serial.println("Patron 4");
-        	timestart = millis();
+        timestart = millis();
      		arr_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
         }
    		else {
