@@ -14,7 +14,8 @@ unsigned long timestart;
 
 
 //Funciones
-void verificacion();
+void verificacion(int iter , int delays);
+void imagen(unsigned long dur);
 void X_patt();
 void rect_patt();
 void alt_patt();
@@ -98,6 +99,73 @@ void verificacion(int iter , int delays){ //
     delay(delays);
   }
 }
+
+void imagen(unsigned long dur) {
+  
+  //Recolección de datos
+  int *im;
+  im = new int [8]; // Array para almacenar los 8 valores decimales
+
+  //Almacenar las cadenas de 8 bits como numeros enteros
+  for (int j = 0; j < 8; j++) {
+    Serial.print("Ingrese una linea de 8 numeros con 0 para apagado y 1 para encendido en la fila ");
+    Serial.print(j);
+    Serial.println(": ");
+    
+    while (Serial.available() < 8) {
+      // Espera hasta que se reciban 8 caracteres
+    }
+
+    // Leer los 8 caracteres y convertirlos a un valor decimal
+    int valorDecimal = 0;
+    for (int i = 0; i < 8; i++) {
+      char caracter = (char)Serial.read();
+      valorDecimal = valorDecimal * 2 + (caracter - '0');
+    }
+    
+    // Almacenar el valor decimal en el array
+    im[j] = valorDecimal;
+    
+    Serial.println(im[j]);
+  }
+  
+  //Valor para los cátodos
+  int *cat;
+  cat = new int [8];
+  
+  for (int j = 0; j <8 ; j++)
+  {
+    if (im[j] != 0) //Solo enciende las lineas cuyo valor entero es diferente de 0
+    {
+      cat[j] = 255-(ceil(pow(2,7-j))); 
+    }
+      else
+      {
+        cat[j] = 255;
+        Serial.println(cat[j]);
+      }
+  }
+  
+  unsigned long inicio = millis();
+  while(millis() - inicio <= dur){
+    
+    for(int k = 0; k<8; k++){
+      
+      patt_print(latchPin, dataPin ,clockPin, cat[k], im[k]);
+      off();
+    }
+    
+  }
+  
+  delete [] im; //Liberar memoria
+  im = NULL;
+  
+  delete [] cat; //Liberar memoria
+  cat = NULL;
+    
+}
+
+
 
 void rect_patt(unsigned long dur , unsigned long inicio){
   
