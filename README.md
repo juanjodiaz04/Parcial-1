@@ -1,2 +1,2 @@
 # Parcial-1
-Repositorio de la Solución del Parcial jag
+Repositorio de la Solución del Parcial
