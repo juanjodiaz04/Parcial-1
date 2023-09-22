@@ -135,30 +135,30 @@ void rect_patt(unsigned long dur , unsigned long inicio){
 
 }
 
-void X_patt(unsigned long dur, unsigned long inicio) {
+void X_patt(unsigned long dur, unsigned long inicio){
   
-  byte* led_array = new byte[8];
+  int *p; int a = 6;
+  p = new int [4];
   
-  led_array[0] = 0B01111110;
-  led_array[1] = 0B10000001;
-  led_array[2] = 0B10111101;
-  led_array[3] = 0B01000010;
-  led_array[4] = 0B11011011;
-  led_array[5] = 0B00100100;
-  led_array[6] = 0B11100111;
-  led_array[7] = 0B00011000;
+  p[0] = 126;  //0B01111110 → 126 Byte semilla para el register shifter de los cátodos
   
+  for (int j = 1; j<4 ;j++) //Llenar el array de las otras semillas
+  {
+    p[j] = p[j-1] + (ceil(pow(2,a)))-(ceil(pow(2,6-a))); //Forma 2**n - 2**a → n+a = 6
+    a--;
+   }
+    
   while (millis() - inicio <= dur) {
-  
-    for (int i = 0; i < 8; i++) {
-      digitalWrite(latchPin, LOW);
-      shiftOut(dataPin, clockPin, MSBFIRST, led_array[i]);
-      digitalWrite(latchPin, HIGH);
-      digitalWrite(latchPin, LOW);
+    for (int i = 0; i <4; i++){
+      patt_print(latchPin, dataPin ,clockPin, p[i], 255-p[i]);
     }
+    
   }
-
-  delete[] led_array; // Liberar la memoria dinámica cuando ya no se necesita
+  
+  off(); //Apaga los leds al final 
+  
+  delete [] p; //Liberar memoria
+  p = NULL;
 }
 
 void alt_patt(unsigned long dur, unsigned long inicio) {
