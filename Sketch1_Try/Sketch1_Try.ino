@@ -175,34 +175,36 @@ void alt_patt(unsigned long dur, unsigned long inicio) {
 
 void arr_patt(unsigned long dur , unsigned long inicio){
   
-  while(millis() - inicio <= dur){
   
-    digitalWrite(latchPin,LOW);
-    shiftOut(dataPin,clockPin,MSBFIRST,0B01111110); 
-    shiftOut(dataPin,clockPin,MSBFIRST,0B11110000); 
-  	digitalWrite(latchPin,HIGH);
-    digitalWrite(latchPin,LOW);
+  int **pa; int a = 6;
+  pa = (new int* [2]); //Filas
   
-    shiftOut(dataPin,clockPin,MSBFIRST,0B10111101); 
-    shiftOut(dataPin,clockPin,MSBFIRST,0B01111000); 
-  	digitalWrite(latchPin,HIGH);
-    digitalWrite(latchPin,LOW);
+  pa[0] = new int [4]; pa[1] = new int [4]; //Reservar columnas
   
-    shiftOut(dataPin,clockPin,MSBFIRST,0B11011011); 
-    shiftOut(dataPin,clockPin,MSBFIRST,0B00111100); 
-  	digitalWrite(latchPin,HIGH);
-    digitalWrite(latchPin,LOW);
+  pa[0][0] = 126; //Semilla para el register shifter de los cátodos
+  pa[1][0] = 240;  //Semilla para el register shifter de los ánodos
   
-    shiftOut(dataPin,clockPin,MSBFIRST,0B11100111); 
-    shiftOut(dataPin,clockPin,MSBFIRST,0B00011110); 
-  	digitalWrite(latchPin,HIGH);
-    digitalWrite(latchPin,LOW);
   
-  	shiftOut(dataPin,clockPin,MSBFIRST,0B11111111); 
-    shiftOut(dataPin,clockPin,MSBFIRST,0B00000000);
-    digitalWrite(latchPin,HIGH);
-    digitalWrite(latchPin,LOW);
-  }
+  for (int j = 1; j<4 ;j++) //Llenar el array de las otras semillas
+  {
+    pa[0][j] = pa[0][j-1] + (ceil(pow(2,a)))-(ceil(pow(2,6-a))); //Forma 2**n - 2**a → n+a = 6
+    pa[1][j] = pa[1][j-1] - (ceil(pow(2,8-j))) + (ceil(pow(2,4-j))); //Suma un bit a la derecha y resta un bit a la izquierda
+    a--;
+   }
+  
+  	while(millis() - inicio <= dur){
+      for (int i = 0; i <4; i++){
+        patt_print(latchPin, dataPin ,clockPin, pa[0][i], pa[1][i]);
+      }
+      
+	    
+    }
+  off();
+  
+  delete [] pa[0]; delete [] pa[1];  //Liberación de memoria
+  delete [] pa;
+  pa = NULL;
+  
 }
 
   // Codigo para seleccionar opciones y que se ejecuten hasta que la entrada del puerto serial cambie
