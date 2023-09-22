@@ -1,5 +1,8 @@
-//C++ code
+// C++ code
 //
+
+#include <math.h>
+
 int latchPin=11; //Pin de Latch
 int clockPin=12; //Pin del Reloj	
 int dataPin=9;	//Pin de datos
@@ -55,28 +58,28 @@ void loop() {
           	Serial.print("Tiempo de inicio: ");
           	Serial.println(timestart);
      		rect_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
-      }
+        }
    		else if(receivedChar == 'C'){
      		Serial.println("Patron 2");
         	timestart = millis();
           	Serial.print("Tiempo de inicio: ");
           	Serial.println(timestart);
      		X_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
-      }
+        }
    		else if(receivedChar == 'D'){
      		Serial.println("Patron 3");
         	timestart = millis();
           	Serial.print("Tiempo de inicio: ");
           	Serial.println(timestart);
      		alt_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
-      }
+        }
    		else if(receivedChar == 'E'){
      		Serial.println("Patron 4");
         	timestart = millis();
           	Serial.print("Tiempo de inicio: ");
           	Serial.println(timestart);
      		arr_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
-      }
+        }
    		else {
    		}
    
@@ -84,20 +87,14 @@ void loop() {
   
 } //Cierre void loop
 
-void verificacion(int iter , int delays){
+void verificacion(int iter , int delays){ //
   
   for (int i = 0; i < iter; i++){
     
-    shiftOut(dataPin,clockPin,MSBFIRST,0B00000000); 
-    shiftOut(dataPin,clockPin,MSBFIRST,0B11111111); 
-  	digitalWrite(latchPin,HIGH);
-    digitalWrite(latchPin,LOW);
+    patt_print(latchPin, dataPin ,clockPin, 0, 255);
     delay(delays);
     
-    shiftOut(dataPin,clockPin,MSBFIRST,0B11111111); 
-    shiftOut(dataPin,clockPin,MSBFIRST,0B00000000);
-    digitalWrite(latchPin,HIGH);
-    digitalWrite(latchPin,LOW);
+    off();
     delay(delays);
   }
 }
@@ -135,6 +132,7 @@ void rect_patt(unsigned long dur , unsigned long inicio){
 
 }
 
+
 void X_patt(unsigned long dur, unsigned long inicio){
   
   int *p; int a = 6;
@@ -160,6 +158,8 @@ void X_patt(unsigned long dur, unsigned long inicio){
   delete [] p; //Liberar memoria
   p = NULL;
 }
+
+
 
 void alt_patt(unsigned long dur, unsigned long inicio) { 
   
@@ -204,6 +204,20 @@ void arr_patt(unsigned long dur , unsigned long inicio){
   delete [] pa[0]; delete [] pa[1];  //Liberación de memoria
   delete [] pa;
   pa = NULL;
+  
+}
+
+
+void off(){
+  patt_print(latchPin, dataPin ,clockPin, 255, 0);
+}
+
+void patt_print(int latchPin,int dataPin,int clockPin,int a, int b){
+  
+    digitalWrite(latchPin,LOW);
+    shiftOut(dataPin,clockPin,MSBFIRST,a); 
+    shiftOut(dataPin,clockPin,MSBFIRST,b);
+    digitalWrite(latchPin,HIGH);
   
 }
 
