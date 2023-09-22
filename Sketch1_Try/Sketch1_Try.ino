@@ -9,13 +9,13 @@ int dataPin=9;	//Pin de datos
 
 char receivedChar; //Para almacenar el valor del puerto serial
 
-unsigned long durat = 3000;
+unsigned long durat = 1500;
 unsigned long timestart;
 
 
 //Funciones
 void verificacion(int iter , int delays);
-void imagen(unsigned long dur);
+void imagen(unsigned long dur, int del);
 void X_patt();
 void rect_patt();
 void alt_patt();
@@ -32,10 +32,12 @@ void setup() {
   pinMode(clockPin,OUTPUT);
   pinMode(dataPin,OUTPUT);
   
-  Serial.println("Escoge la opcion");
+  Serial.println("Escoge una opcion entre 1, 2 y 3");
 }
 void loop() {
   // put your main code here, to run repeatedly:
+  
+  publik();
 
   //verificacion();
   //rect_patt();
@@ -43,38 +45,40 @@ void loop() {
   //alt_patt();
   //arr_patt();
 
+  /*
  if (Serial.available() > 0) {  
     	receivedChar = Serial.read();
    
    		if (receivedChar == 'A'){
      		Serial.println("Verificacion");
-        timestart = millis();
+        	timestart = millis();
      		imagen(durat); //duración
    		}
    		else if(receivedChar == 'B'){
      		Serial.println("Patron 1");
-        timestart = millis();
+        	timestart = millis();
      		rect_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
         }
    		else if(receivedChar == 'C'){
      		Serial.println("Patron 2");
-        timestart = millis();
+        	timestart = millis();
      		X_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
         }
    		else if(receivedChar == 'D'){
      		Serial.println("Patron 3");
-        timestart = millis();
+        	timestart = millis();
      		alt_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
         }
    		else if(receivedChar == 'E'){
      		Serial.println("Patron 4");
-        timestart = millis();
+        	timestart = millis();
      		arr_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
         }
    		else {
    		}
-   
+        
  } //Cierre if puerto serial
+ */
   
 } //Cierre void loop
 
@@ -90,7 +94,7 @@ void verificacion(int iter , int delays){ //
   }
 }
 
-void imagen(unsigned long dur) {
+void imagen(unsigned long dur, int del) {
   
   //Recolección de datos
   int *im;
@@ -132,19 +136,21 @@ void imagen(unsigned long dur) {
       else
       {
         cat[j] = 255;
-        Serial.println(cat[j]);
       }
   }
-  
-  unsigned long inicio = millis();
-  while(millis() - inicio <= dur){
+  for(int l = 0; l < 3;l++){
     
-    for(int k = 0; k<8; k++){
+    unsigned long inicio = millis();
+    while(millis() - inicio <= dur){
       
-      patt_print(latchPin, dataPin ,clockPin, cat[k], im[k]);
-      off();
+      for(int k = 0; k<8; k++){
+        
+        patt_print(latchPin, dataPin ,clockPin, cat[k], im[k]);
+        off();
+      }
+           
     }
-    
+    delay(del);
   }
   
   delete [] im; //Liberar memoria
@@ -279,43 +285,61 @@ void patt_print(int latchPin,int dataPin,int clockPin,int a, int b){
   
 }
 
-  // Codigo para seleccionar opciones y que se ejecuten hasta que la entrada del puerto serial cambie
-  /*
-   if (Serial.available() > 0) {  
-    receivedChar = Serial.read();
-    
-    if (receivedChar == 'A') { 
-      while (receivedChar == 'A') {
-        rect_patt();
-        if (Serial.available() > 0) {
-          receivedChar = Serial.read();
-        }
-      }
-    }
-    else if (receivedChar == 'B') { 
-      while (receivedChar == 'B') {
-        X_patt();
-        if (Serial.available() > 0) {
-          receivedChar = Serial.read();
-        }
-      }
-    }
-    else if (receivedChar == 'C') { 
-      while (receivedChar == 'C') {
-        alt_patt();
-        if (Serial.available() > 0) {
-          receivedChar = Serial.read();
-        }
-      }
-    }
-    else if (receivedChar == 'D') { 
-      while (receivedChar == 'D') {
-        arr_patt();
-        if (Serial.available() > 0) {
-          receivedChar = Serial.read();
-        }
-      }
-    }
-  }
-  */
 
+void publik(){
+
+  if (Serial.available() > 0) {  
+    	receivedChar = Serial.read();
+   
+   		if (receivedChar == '1'){
+     		Serial.println("Verificacion");
+            Serial.println("Ingrese cuantos segundos de delay: ");
+            while (Serial.available() < 1) {  }   // Espera hasta que se reciba 1 caracter
+            int del = Serial.parseInt();
+     		verificacion(3,1000*del); //duración
+          	Serial.println("Escoge una opcion nuevamente");
+   		}
+   		else if(receivedChar == '2'){
+     		Serial.println("Imagen por pantalla");
+            Serial.println("Ingrese cuantos segundos de delay: ");
+            while (Serial.available() < 1) {  }   // Espera hasta que se reciba 1 caracter
+            int del = Serial.parseInt();
+     		imagen(durat,1000*del); //duración
+          	Serial.println("Escoge una opcion nuevamente");
+        }
+   		else if(receivedChar == '3'){
+     		Serial.println("Patrones");
+            Serial.println("Ingrese cuantos segundos de delay: ");
+            while (Serial.available() < 1) {  }   // Espera hasta que se reciba 1 caracter
+            int del = Serial.parseInt();
+            for(int i = 0; i < 3; i++)
+            {
+              timestart = millis();
+              rect_patt(durat, timestart);
+              delay(1000*del);
+
+              timestart = millis();
+              X_patt(durat, timestart);
+              delay(1000*del);
+
+              timestart = millis();
+              alt_patt(durat, timestart);
+              delay(1000*del);
+
+              timestart = millis();
+              arr_patt(durat, timestart);
+              delay(1000*del);
+            }
+          	Serial.println("Escoge una opcion nuevamente");
+        }
+    
+    	else if (receivedChar == '0'){
+     		Serial.println("Has salido del programa");
+          	abort();
+   		}
+    
+        else {
+        }
+  }
+
+}
