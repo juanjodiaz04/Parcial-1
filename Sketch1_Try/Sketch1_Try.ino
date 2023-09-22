@@ -49,36 +49,26 @@ void loop() {
    		if (receivedChar == 'A'){
      		Serial.println("Verificacion");
         	timestart = millis();
-          	Serial.print("Tiempo de inicio: ");
-          	Serial.println(timestart);
      		verificacion(3, 2000); //Iteraciones y tiempo de delay
    		}
    		else if(receivedChar == 'B'){
      		Serial.println("Patron 1");
         	timestart = millis();
-          	Serial.print("Tiempo de inicio: ");
-          	Serial.println(timestart);
      		rect_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
         }
    		else if(receivedChar == 'C'){
      		Serial.println("Patron 2");
         	timestart = millis();
-          	Serial.print("Tiempo de inicio: ");
-          	Serial.println(timestart);
      		X_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
         }
    		else if(receivedChar == 'D'){
      		Serial.println("Patron 3");
         	timestart = millis();
-          	Serial.print("Tiempo de inicio: ");
-          	Serial.println(timestart);
      		alt_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
         }
    		else if(receivedChar == 'E'){
      		Serial.println("Patron 4");
         	timestart = millis();
-          	Serial.print("Tiempo de inicio: ");
-          	Serial.println(timestart);
      		arr_patt(durat, timestart); //Duración del patrón y tiempo al que empieza
         }
    		else {
