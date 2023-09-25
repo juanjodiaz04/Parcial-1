@@ -9,7 +9,7 @@ int dataPin=9;	//Pin de datos
 
 char receivedChar; //Para almacenar el valor del puerto serial
 
-unsigned long durat = 1500; //Tiempo de prueba
+unsigned long durat = 1000; //Tiempo de prueba
 unsigned long timestart;  // Almacena justo el tiempo donde se comienza a ejecutar la función
 
 
@@ -289,7 +289,7 @@ void publik(){
         Serial.println("Ingrese cuantos segundos de delay: ");
         while (Serial.available() < 1) {  }   // Espera hasta que se reciba 1 caracter
         int del = Serial.parseInt();
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 3; i++) // Se realizan 3 iteraciones en la que se muestra cada patrón 
         {
           timestart = millis();
           rect_patt(durat, timestart);
