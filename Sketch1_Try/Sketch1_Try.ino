@@ -22,14 +22,14 @@ Ejemplo de uso:
 	Para mostrar la imagen de un gato en la matriz de LED, el usuario 
 	podría ingresar la siguiente cadena de caracteres al puerto serie:
 
-	11111111
 	10000001
+	11000011
+	10111101
 	10000001
+	10100101
 	10000001
-	10000001
-	10000001
-	10000001
-	11111111
+	01000010
+	00111100
 
 	La función imagen() luego imprimiría la imagen en la matriz de LED.
 
@@ -40,9 +40,9 @@ El resto de figuras dependeran de la ejecucion de las demas funciones
 
 #include <math.h>
 
-int latchPin=11; //Pin de Latch
-int clockPin=12; //Pin del Reloj	
-int dataPin=9;	//Pin de datos
+int latchPin=11; //Pin de Latch 
+int clockPin=12; //Pin del Reloj
+int dataPin=9;	//Pin de datos 
 
 char receivedChar; //Para almacenar el valor del puerto serial
 
