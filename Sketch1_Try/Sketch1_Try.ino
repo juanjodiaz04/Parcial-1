@@ -1,6 +1,43 @@
 // C++ code
 //
 
+/*
+
+Descripción: Este código muestra una variedad de patrones en 
+una matriz de LED de 8x8 utilizando un Arduino Uno.
+
+Funciones:
+
+	- verificacion(): Muestra una secuencia de encendido y apagado de los LED.
+	- imagen(): Muestra una imagen personalizada en la matriz de LED.
+	- rect_patt(): Muestra un patrón rectangular en la matriz de LED.
+	- X_patt(): Muestra un patrón en forma de X en la matriz de LED.
+	- alt_patt(): Muestra un patrón alterno en la matriz de LED.
+	- arr_patt(): Muestra un patrón de flecha en la matriz de LED.
+	- off(): Apaga todos los LED de la matriz.
+	- patt_print(): Imprime un patrón en la matriz de LED.
+
+Ejemplo de uso:
+
+	Para mostrar la imagen de un gato en la matriz de LED, el usuario 
+	podría ingresar la siguiente cadena de caracteres al puerto serie:
+
+	11111111
+	10000001
+	10000001
+	10000001
+	10000001
+	10000001
+	10000001
+	11111111
+
+	La función imagen() luego imprimiría la imagen en la matriz de LED.
+
+El resto de figuras dependeran de la ejecucion de las demas funciones
+
+*/
+
+
 #include <math.h>
 
 int latchPin=11; //Pin de Latch
